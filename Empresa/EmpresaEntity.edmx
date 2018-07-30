@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmpresaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_ciudad">
+          <Key>
+            <PropertyRef Name="idCiudad" />
+          </Key>
+          <Property Name="idCiudad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreCiudad" Type="varchar" MaxLength="50" />
+          <Property Name="idDepto" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_depto">
+          <Key>
+            <PropertyRef Name="idDepto" />
+          </Key>
+          <Property Name="idDepto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreDepto" Type="varchar" MaxLength="50" />
+          <Property Name="idPais" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_empresa">
+          <Key>
+            <PropertyRef Name="idEmpresa" />
+          </Key>
+          <Property Name="idEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombreEmpresa" Type="varchar" MaxLength="50" />
+          <Property Name="direccionEmpresa" Type="varchar" MaxLength="100" />
+          <Property Name="telEmpresa" Type="varchar" MaxLength="15" />
+          <Property Name="creacionEmpresa" Type="datetime" />
+          <Property Name="modEmpresa" Type="datetime" />
+          <Property Name="idCiudad" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_pais">
+          <Key>
+            <PropertyRef Name="idPais" />
+          </Key>
+          <Property Name="idPais" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombrePais" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__tbl_ciuda__idDep__15502E78">
+          <End Role="tbl_depto" Type="Self.tbl_depto" Multiplicity="0..1" />
+          <End Role="tbl_ciudad" Type="Self.tbl_ciudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_depto">
+              <PropertyRef Name="idDepto" />
+            </Principal>
+            <Dependent Role="tbl_ciudad">
+              <PropertyRef Name="idDepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_depto__idPai__1273C1CD">
+          <End Role="tbl_pais" Type="Self.tbl_pais" Multiplicity="0..1" />
+          <End Role="tbl_depto" Type="Self.tbl_depto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_pais">
+              <PropertyRef Name="idPais" />
+            </Principal>
+            <Dependent Role="tbl_depto">
+              <PropertyRef Name="idPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_empre__idCiu__182C9B23">
+          <End Role="tbl_ciudad" Type="Self.tbl_ciudad" Multiplicity="0..1" />
+          <End Role="tbl_empresa" Type="Self.tbl_empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ciudad">
+              <PropertyRef Name="idCiudad" />
+            </Principal>
+            <Dependent Role="tbl_empresa">
+              <PropertyRef Name="idCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_lisarPaisDeptoCiudad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idEmpresa" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_listarEmpresas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_listarEmpresasSearch" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="texto" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="EmpresaModelStoreContainer">
+          <EntitySet Name="tbl_ciudad" EntityType="Self.tbl_ciudad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_depto" EntityType="Self.tbl_depto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_empresa" EntityType="Self.tbl_empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_pais" EntityType="Self.tbl_pais" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__tbl_ciuda__idDep__15502E78" Association="Self.FK__tbl_ciuda__idDep__15502E78">
+            <End Role="tbl_depto" EntitySet="tbl_depto" />
+            <End Role="tbl_ciudad" EntitySet="tbl_ciudad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_depto__idPai__1273C1CD" Association="Self.FK__tbl_depto__idPai__1273C1CD">
+            <End Role="tbl_pais" EntitySet="tbl_pais" />
+            <End Role="tbl_depto" EntitySet="tbl_depto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_empre__idCiu__182C9B23" Association="Self.FK__tbl_empre__idCiu__182C9B23">
+            <End Role="tbl_ciudad" EntitySet="tbl_ciudad" />
+            <End Role="tbl_empresa" EntitySet="tbl_empresa" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmpresaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_ciudad">
+          <Key>
+            <PropertyRef Name="idCiudad" />
+          </Key>
+          <Property Name="idCiudad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreCiudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idDepto" Type="Int32" />
+          <NavigationProperty Name="tbl_depto" Relationship="Self.FK__tbl_ciuda__idDep__15502E78" FromRole="tbl_ciudad" ToRole="tbl_depto" />
+          <NavigationProperty Name="tbl_empresa" Relationship="Self.FK__tbl_empre__idCiu__182C9B23" FromRole="tbl_ciudad" ToRole="tbl_empresa" />
+        </EntityType>
+        <EntityType Name="tbl_depto">
+          <Key>
+            <PropertyRef Name="idDepto" />
+          </Key>
+          <Property Name="idDepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreDepto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idPais" Type="Int32" />
+          <NavigationProperty Name="tbl_ciudad" Relationship="Self.FK__tbl_ciuda__idDep__15502E78" FromRole="tbl_depto" ToRole="tbl_ciudad" />
+          <NavigationProperty Name="tbl_pais" Relationship="Self.FK__tbl_depto__idPai__1273C1CD" FromRole="tbl_depto" ToRole="tbl_pais" />
+        </EntityType>
+        <EntityType Name="tbl_empresa">
+          <Key>
+            <PropertyRef Name="idEmpresa" />
+          </Key>
+          <Property Name="idEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombreEmpresa" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direccionEmpresa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telEmpresa" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="creacionEmpresa" Type="DateTime" Precision="3" />
+          <Property Name="modEmpresa" Type="DateTime" Precision="3" />
+          <Property Name="idCiudad" Type="Int32" />
+          <NavigationProperty Name="tbl_ciudad" Relationship="Self.FK__tbl_empre__idCiu__182C9B23" FromRole="tbl_empresa" ToRole="tbl_ciudad" />
+        </EntityType>
+        <EntityType Name="tbl_pais">
+          <Key>
+            <PropertyRef Name="idPais" />
+          </Key>
+          <Property Name="idPais" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombrePais" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_depto" Relationship="Self.FK__tbl_depto__idPai__1273C1CD" FromRole="tbl_pais" ToRole="tbl_depto" />
+        </EntityType>
+        <Association Name="FK__tbl_ciuda__idDep__15502E78">
+          <End Role="tbl_depto" Type="Self.tbl_depto" Multiplicity="0..1" />
+          <End Role="tbl_ciudad" Type="Self.tbl_ciudad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_depto">
+              <PropertyRef Name="idDepto" />
+            </Principal>
+            <Dependent Role="tbl_ciudad">
+              <PropertyRef Name="idDepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_empre__idCiu__182C9B23">
+          <End Role="tbl_ciudad" Type="Self.tbl_ciudad" Multiplicity="0..1" />
+          <End Role="tbl_empresa" Type="Self.tbl_empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ciudad">
+              <PropertyRef Name="idCiudad" />
+            </Principal>
+            <Dependent Role="tbl_empresa">
+              <PropertyRef Name="idCiudad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_depto__idPai__1273C1CD">
+          <End Role="tbl_pais" Type="Self.tbl_pais" Multiplicity="0..1" />
+          <End Role="tbl_depto" Type="Self.tbl_depto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_pais">
+              <PropertyRef Name="idPais" />
+            </Principal>
+            <Dependent Role="tbl_depto">
+              <PropertyRef Name="idPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmpresaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_ciudad" EntityType="Self.tbl_ciudad" />
+          <EntitySet Name="tbl_depto" EntityType="Self.tbl_depto" />
+          <EntitySet Name="tbl_empresa" EntityType="Self.tbl_empresa" />
+          <EntitySet Name="tbl_pais" EntityType="Self.tbl_pais" />
+          <AssociationSet Name="FK__tbl_ciuda__idDep__15502E78" Association="Self.FK__tbl_ciuda__idDep__15502E78">
+            <End Role="tbl_depto" EntitySet="tbl_depto" />
+            <End Role="tbl_ciudad" EntitySet="tbl_ciudad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_empre__idCiu__182C9B23" Association="Self.FK__tbl_empre__idCiu__182C9B23">
+            <End Role="tbl_ciudad" EntitySet="tbl_ciudad" />
+            <End Role="tbl_empresa" EntitySet="tbl_empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_depto__idPai__1273C1CD" Association="Self.FK__tbl_depto__idPai__1273C1CD">
+            <End Role="tbl_pais" EntitySet="tbl_pais" />
+            <End Role="tbl_depto" EntitySet="tbl_depto" />
+          </AssociationSet>
+          <FunctionImport Name="sp_listarEmpresas" ReturnType="Collection(EmpresaModel.sp_listarEmpresas_Result)" />
+          <FunctionImport Name="sp_lisarPaisDeptoCiudad" ReturnType="Collection(EmpresaModel.sp_lisarPaisDeptoCiudad_Result)">
+          <Parameter Name="idEmpresa" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_listarEmpresasSearch" ReturnType="Collection(EmpresaModel.sp_listarEmpresasSearch_Result)">
+            <Parameter Name="texto" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_listarEmpresas_Result">
+          <Property Type="Int32" Name="idEmpresa" Nullable="false" />
+          <Property Type="String" Name="nombreEmpresa" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="direccionEmpresa" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telEmpresa" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="creacionEmpresa" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modEmpresa" Nullable="true" Precision="23" />
+          <Property Type="String" Name="nombreCiudad" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_lisarPaisDeptoCiudad_Result">
+          <Property Type="String" Name="nombreCiudad" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombreDepto" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nombrePais" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="sp_listarEmpresasSearch_Result">
+          <Property Type="Int32" Name="idEmpresa" Nullable="false" />
+          <Property Type="String" Name="nombreEmpresa" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="direccionEmpresa" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="telEmpresa" Nullable="true" MaxLength="15" />
+          <Property Type="DateTime" Name="creacionEmpresa" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="modEmpresa" Nullable="true" Precision="23" />
+          <Property Type="String" Name="nombreCiudad" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmpresaModelStoreContainer" CdmEntityContainer="EmpresaEntities">
+          <EntitySetMapping Name="tbl_ciudad">
+            <EntityTypeMapping TypeName="EmpresaModel.tbl_ciudad">
+              <MappingFragment StoreEntitySet="tbl_ciudad">
+                <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+                <ScalarProperty Name="nombreCiudad" ColumnName="nombreCiudad" />
+                <ScalarProperty Name="idDepto" ColumnName="idDepto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_depto">
+            <EntityTypeMapping TypeName="EmpresaModel.tbl_depto">
+              <MappingFragment StoreEntitySet="tbl_depto">
+                <ScalarProperty Name="idDepto" ColumnName="idDepto" />
+                <ScalarProperty Name="nombreDepto" ColumnName="nombreDepto" />
+                <ScalarProperty Name="idPais" ColumnName="idPais" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_empresa">
+            <EntityTypeMapping TypeName="EmpresaModel.tbl_empresa">
+              <MappingFragment StoreEntitySet="tbl_empresa">
+                <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+                <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
+                <ScalarProperty Name="direccionEmpresa" ColumnName="direccionEmpresa" />
+                <ScalarProperty Name="telEmpresa" ColumnName="telEmpresa" />
+                <ScalarProperty Name="creacionEmpresa" ColumnName="creacionEmpresa" />
+                <ScalarProperty Name="modEmpresa" ColumnName="modEmpresa" />
+                <ScalarProperty Name="idCiudad" ColumnName="idCiudad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_pais">
+            <EntityTypeMapping TypeName="EmpresaModel.tbl_pais">
+              <MappingFragment StoreEntitySet="tbl_pais">
+                <ScalarProperty Name="idPais" ColumnName="idPais" />
+                <ScalarProperty Name="nombrePais" ColumnName="nombrePais" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_listarEmpresas" FunctionName="EmpresaModel.Store.sp_listarEmpresas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmpresaModel.sp_listarEmpresas_Result">
+                <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+                <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
+                <ScalarProperty Name="direccionEmpresa" ColumnName="direccionEmpresa" />
+                <ScalarProperty Name="telEmpresa" ColumnName="telEmpresa" />
+                <ScalarProperty Name="creacionEmpresa" ColumnName="creacionEmpresa" />
+                <ScalarProperty Name="modEmpresa" ColumnName="modEmpresa" />
+                <ScalarProperty Name="nombreCiudad" ColumnName="nombreCiudad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_lisarPaisDeptoCiudad" FunctionName="EmpresaModel.Store.sp_lisarPaisDeptoCiudad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmpresaModel.sp_lisarPaisDeptoCiudad_Result">
+                <ScalarProperty Name="nombreCiudad" ColumnName="nombreCiudad" />
+                <ScalarProperty Name="nombreDepto" ColumnName="nombreDepto" />
+                <ScalarProperty Name="nombrePais" ColumnName="nombrePais" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_listarEmpresasSearch" FunctionName="EmpresaModel.Store.sp_listarEmpresasSearch">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EmpresaModel.sp_listarEmpresasSearch_Result">
+                <ScalarProperty Name="idEmpresa" ColumnName="idEmpresa" />
+                <ScalarProperty Name="nombreEmpresa" ColumnName="nombreEmpresa" />
+                <ScalarProperty Name="direccionEmpresa" ColumnName="direccionEmpresa" />
+                <ScalarProperty Name="telEmpresa" ColumnName="telEmpresa" />
+                <ScalarProperty Name="creacionEmpresa" ColumnName="creacionEmpresa" />
+                <ScalarProperty Name="modEmpresa" ColumnName="modEmpresa" />
+                <ScalarProperty Name="nombreCiudad" ColumnName="nombreCiudad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
