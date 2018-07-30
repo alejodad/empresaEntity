@@ -1,0 +1,71 @@
+create table tbl_pais(
+idPais int identity primary key,
+nombrePais varchar(50)
+);
+insert into tbl_pais(nombrePais) values ('Colombia'),('Chile');
+
+create table tbl_depto(
+idDepto int identity primary key,
+nombreDepto varchar(50),
+idPais int foreign key references tbl_pais(idPais));
+
+insert into tbl_depto(nombreDepto,idPais) values('Antioquia',1),('Bogota',1);
+
+create table tbl_ciudad(
+idCiudad int identity primary key,
+nombreCiudad varchar(50),
+idDepto int foreign key references tbl_depto(idDepto));
+
+insert into tbl_ciudad(nombreCiudad,idDepto)values('Bello',1),('Medellin',1),('Bogota DC',2);
+
+create table tbl_empresa(
+idEmpresa int identity primary key,
+nombreEmpresa varchar(50),
+direccionEmpresa varchar(100),
+telEmpresa varchar(15),
+creacionEmpresa datetime,
+modEmpresa datetime,
+idCiudad int foreign key references tbl_ciudad(idCiudad));
+
+insert into tbl_empresa (nombreEmpresa,direccionEmpresa,telEmpresa,creacionEmpresa,modEmpresa,idCiudad)
+values ('empresa2','calle 2no 22 2 ','6876132',GETDATE(),null,2)
+
+USE Empresa;  
+GO  
+CREATE PROCEDURE sp_listarEmpresas      
+AS   
+select idEmpresa,nombreEmpresa,direccionEmpresa,telEmpresa,creacionEmpresa,modEmpresa,tbl_ciudad.nombreCiudad
+ from tbl_empresa
+join tbl_ciudad
+on tbl_empresa.idCiudad = tbl_ciudad.idCiudad;
+GO   
+
+USE Empresa;  
+GO  
+CREATE PROCEDURE sp_lisarPaisDeptoCiudad
+@idEmpresa int    
+AS   
+select tbl_ciudad.nombreCiudad,tbl_depto.nombreDepto,tbl_pais.nombrePais
+ from tbl_empresa
+join tbl_ciudad
+on tbl_empresa.idCiudad = tbl_ciudad.idCiudad
+join tbl_depto 
+on tbl_ciudad.idDepto = tbl_depto.idDepto
+join tbl_pais
+on tbl_depto.idPais = tbl_pais.idPais
+where tbl_empresa.idEmpresa = @idEmpresa;
+GO
+select * from tbl_depto
+
+USE Empresa;  
+GO  
+CREATE PROCEDURE sp_listarEmpresasSearch
+@texto varchar(50)      
+AS   
+select idEmpresa,nombreEmpresa,direccionEmpresa,telEmpresa,creacionEmpresa,modEmpresa,tbl_ciudad.nombreCiudad
+ from tbl_empresa
+join tbl_ciudad
+on tbl_empresa.idCiudad = tbl_ciudad.idCiudad
+where tbl_empresa.nombreEmpresa like '%'+@texto+'%';
+GO
+exec sp_listarEmpresasSearch @texto='1';
